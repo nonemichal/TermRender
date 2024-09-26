@@ -1,0 +1,35 @@
+name: Build TermRender
+
+on:
+  push:
+    branches:
+      - main
+      - feature/*
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y build-essential cmake libncurses5-dev libncursesw5-dev
+
+      - name: Create build directory
+        run: mkdir -p build
+
+      - name: Configure and Build with CMake
+        run: |
+          cd build
+          cmake ..
+          make
+
+      - name: Run application
+        run: |
+          cd build
+          ./TermRender
