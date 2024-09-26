@@ -1,0 +1,6 @@
+#ifndef INCLUDE_SRC_RENDERER_H_
+#define INCLUDE_SRC_RENDERER_H_
+
+
+
+#endif  // INCLUDE_SRC_RENDERER_H_
