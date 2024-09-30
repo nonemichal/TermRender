@@ -3,7 +3,7 @@
 
 #include "Axes.h"
 
-class Vector3;
+class Point3;
 
 class Quaternion {
   float w, x, y, z;
@@ -20,7 +20,7 @@ public:
 
   static Quaternion fromAngleAxes(float angle, Axes axes);
 
-  Vector3 toVector3() const;
+  Point3 toPoint3() const;
 
   void print() const;
 };

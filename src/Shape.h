@@ -6,9 +6,7 @@
 class Shape {
 public:
   virtual Shape &rotate(const Quaternion &quat) = 0;
-  virtual Shape &zoom(float scalar) = 0;
-
-  virtual void draw() const = 0;
+  virtual Shape &scale(float scalar) = 0;
 
   virtual void print() const = 0;
 
