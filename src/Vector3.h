@@ -9,15 +9,15 @@ class Vector3 {
 public:
   Vector3(float x, float y, float z);
 
-  Vector3 operator+(const Vector3 &v) const;
-  Vector3 operator-(const Vector3 &v) const;
+  Vector3 operator+(const Vector3 &vec) const;
+  Vector3 operator-(const Vector3 &vec) const;
   Vector3 operator*(float scalar) const;
 
   float length() const;
 
   Vector3 normalized() const;
 
-  Vector3 rotate(const Quaternion &q) const;
+  Vector3 rotate(const Quaternion &quat) const;
 
   void print() const;
 };

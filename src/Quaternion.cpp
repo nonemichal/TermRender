@@ -7,11 +7,11 @@
 Quaternion::Quaternion(float w, float x, float y, float z)
     : w(w), x(x), y(y), z(z) {}
 
-Quaternion Quaternion::operator*(const Quaternion &q) const {
-  return Quaternion(w * q.w - x * q.x - y * q.y - z * q.z,
-                    w * q.x + x * q.w + y * q.z - z * q.y,
-                    w * q.y - x * q.z + y * q.w + z * q.x,
-                    w * q.z + x * q.y - y * q.x + z * q.w);
+Quaternion Quaternion::operator*(const Quaternion &quat) const {
+  return Quaternion(w * quat.w - x * quat.x - y * quat.y - z * quat.z,
+                    w * quat.x + x * quat.w + y * quat.z - z * quat.y,
+                    w * quat.y - x * quat.z + y * quat.w + z * quat.x,
+                    w * quat.z + x * quat.y - y * quat.x + z * quat.w);
 }
 
 float Quaternion::length() const {
@@ -29,9 +29,9 @@ Quaternion Quaternion::fromAngleAxes(float angle, Axes axes) {
   float halfAngle = angle / 2.0f;
   float sin = std::sin(halfAngle);
   float cos = std::cos(halfAngle);
-  float ax = axes.ax;
-  float ay = axes.ay;
-  float az = axes.az;
+  float ax = axes.axisX;
+  float ay = axes.axisY;
+  float az = axes.axisZ;
 
   return Quaternion(cos, ax * sin, ay * sin, az * sin);
 }
