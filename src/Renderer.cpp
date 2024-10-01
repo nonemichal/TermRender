@@ -3,9 +3,9 @@
 #include "Point2_Int.h"
 #include "ShapeWithVertices.h"
 #include "ShapeWithoutVertices.h"
-#include "ncurses.h"
 #include <algorithm>
 #include <cstdlib>
+#include <ncurses.h>
 
 Renderer::Renderer() {
   initscr();
