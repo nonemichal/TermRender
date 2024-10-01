@@ -1,19 +1,21 @@
 #ifndef INCLUDE_SRC_SHAPEWITHVERTICES_H_
 #define INCLUDE_SRC_SHAPEWITHVERTICES_H_
 
-#include "Point3.h"
+#include "Point3_Float.h"
 #include "Shape.h"
 #include <utility>
 #include <vector>
 
-using Edge = std::pair<double, double>;
-
 class ShapeWithVertices : public Shape {
+public:
+  using Edge = std::pair<double, double>;
+
+private:
   static const std::vector<Edge> edges;
-  std::vector<Point3> vertices;
+  std::vector<Point3_Float> vertices;
 
 public:
-  const std::vector<Point3> &getVertices() const;
+  const std::vector<Point3_Float> &getVertices() const;
   const std::vector<Edge> &getEdges() const;
 };
 

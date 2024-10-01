@@ -5,7 +5,7 @@
 #include "ShapeWithoutVertices.h"
 
 class Renderer {
-  void drawEdge(const Point3 &vec1, const Point3 &vec2) const;
+  void drawEdge(const Point3_Float &start, const Point3_Float &end) const;
 
 public:
   Renderer();

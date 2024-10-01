@@ -1,7 +1,10 @@
 #include "Renderer.h"
+#include "EdgeCalculation.h"
+#include "Point2_Int.h"
 #include "ShapeWithVertices.h"
 #include "ShapeWithoutVertices.h"
 #include "ncurses.h"
+#include <algorithm>
 #include <cstdlib>
 
 Renderer::Renderer() {
@@ -18,40 +21,28 @@ void Renderer::drawShape(const ShapeWithVertices &shape) const {
   auto vertices = shape.getVertices();
   auto edges = shape.getEdges();
 
-  for (const auto edge : edges) {
-    drawEdge(vertices[edge.first], vertices[edge.second]);
-  }
+  std::for_each(edges.begin(), edges.end(),
+                [this, &vertices](const ShapeWithVertices::Edge &edge) {
+                  drawEdge(vertices[edge.first], vertices[edge.second]);
+                });
 
   refresh();
 }
 
-void Renderer::drawEdge(const Point3 &vec1, const Point3 &vec2) const {
-  int x1 = vec1.getX();
-  int y1 = vec1.getY();
-  int x2 = vec2.getX();
-  int y2 = vec2.getY();
+void Renderer::drawEdge(const Point3_Float &start, const Point3_Float &end) const {
+  Point2_Int start2(start.x, start.y);
+  Point2_Int end2(end.x, end.y);
 
-  int dx = std::abs(x2 - x1);
-  int dy = std::abs(y2 - y1);
-  int sx = (x1 < x2) ? 1 : -1;
-  int sy = (y1 < y2) ? 1 : -1;
-  int err = dx - dy;
+  EdgeCalculation calc(start2, end2);
 
   while (true) {
-    mvaddch(x1, y1, '*');
+    mvaddch(start2.x, start2.y, '*');
 
-    if (x1 == x2 && y1 == y2)
+    if (start2.x == end2.x && start2.y == end2.y)
       break;
 
-    int e2 = 2 * err;
-    if (e2 > -dy) {
-      err -= dy;
-      x1 += sx;
-    }
-    if (e2 < dx) {
-      err += dx;
-      y1 += sy;
-    }
+    calc.update();
+    start2.update(calc);
   }
 }
 

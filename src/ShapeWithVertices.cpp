@@ -1,6 +1,6 @@
 #include "ShapeWithVertices.h"
 
-const std::vector<Point3> &ShapeWithVertices::getVertices() const {
+const std::vector<Point3_Float> &ShapeWithVertices::getVertices() const {
   return vertices;
 }
 

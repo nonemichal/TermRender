@@ -1,6 +1,6 @@
 #include "Quaternion.h"
 #include "Axes.h"
-#include "Point3.h"
+#include "Point3_Float.h"
 #include <cmath>
 #include <iostream>
 
@@ -36,7 +36,7 @@ Quaternion Quaternion::fromAngleAxes(float angle, Axes axes) {
   return Quaternion(cos, ax * sin, ay * sin, az * sin);
 }
 
-Point3 Quaternion::toPoint3() const { return Point3(x, y, z); }
+Point3_Float Quaternion::toPoint3_Float() const { return Point3_Float(x, y, z); }
 
 void Quaternion::print() const {
   std::cout << "Quaternion: (" << w << ", " << x << ", " << y << ", " << z
