@@ -2,7 +2,8 @@
 #include "Point2_Int.h"
 #include <cstdlib>
 
-EdgeCalculation::EdgeCalculation(const Point2_Int &start2, const Point2_Int &end2) {
+EdgeCalculation::EdgeCalculation(const Point2_Int &start2,
+                                 const Point2_Int &end2) {
   dx = std::abs(end2.x - start2.x);
   dy = std::abs(end2.y - start2.y);
   sx = (start2.x < end2.x) ? 1 : -1;

@@ -11,7 +11,7 @@ public:
   using Edge = std::pair<double, double>;
 
 private:
-  static const std::vector<Edge> edges;
+  const std::vector<Edge> edges;
   std::vector<Point3_Float> vertices;
 
 public:

@@ -7,4 +7,4 @@ struct Axes {
   float axisZ;
 };
 
-#endif  // INCLUDE_SRC_AXES_H_
+#endif // INCLUDE_SRC_AXES_H_

@@ -29,9 +29,13 @@ void Renderer::drawShape(const ShapeWithVertices &shape) const {
   refresh();
 }
 
-void Renderer::drawEdge(const Point3_Float &start, const Point3_Float &end) const {
-  Point2_Int start2(start.x, start.y);
-  Point2_Int end2(end.x, end.y);
+void Renderer::drawEdge(const Point3_Float &start,
+                        const Point3_Float &end) const {
+  int width = getmaxx(stdscr);
+  int height = getmaxy(stdscr);
+
+  Point2_Int start2 = Point2_Int::newAdjusted(start.x, start.y, width, height);
+  Point2_Int end2 = Point2_Int::newAdjusted(end.x, end.y, width, height);
 
   EdgeCalculation calc(start2, end2);
 
