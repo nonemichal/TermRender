@@ -5,12 +5,11 @@
 
 class Shape {
 public:
-  virtual Shape &rotate(const Quaternion &quat) = 0;
-  virtual Shape &scale(float scalar) = 0;
-
-  virtual void print() const = 0;
-
   virtual ~Shape() = default;
+
+  virtual void rotate(const Quaternion &quat) = 0;
+  virtual void scale(float scalar) = 0;
+  virtual void print() const = 0;
 };
 
 #endif // INCLUDE_SRC_SHAPE_H_

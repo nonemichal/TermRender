@@ -3,6 +3,7 @@
 
 #include "Point3_Float.h"
 #include "Shape.h"
+#include "ShapeType.h"
 #include <utility>
 #include <vector>
 
@@ -11,10 +12,19 @@ public:
   using Edge = std::pair<double, double>;
 
 private:
-  const std::vector<Edge> edges;
   std::vector<Point3_Float> vertices;
+  std::vector<Edge> edges;
 
 public:
+  ShapeWithVertices(std::vector<Point3_Float> vertices,
+  std::vector<Edge> edges);
+  ShapeWithVertices(ShapeType shapeType); 
+  virtual ~ShapeWithVertices() = default;
+
+  void rotate(const Quaternion &quat) override;
+  void scale(float scalar) override;
+  void print() const override;
+
   const std::vector<Point3_Float> &getVertices() const;
   const std::vector<Edge> &getEdges() const;
 };

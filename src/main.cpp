@@ -1,16 +1,20 @@
 #include "Axes.h"
 #include "Quaternion.h"
-#include "Point3_Float.h"
+#include "Renderer.h"
+#include "ShapeType.h"
+#include "ShapeWithVertices.h"
 #include <cmath>
 
 int main(int argc, char **argv) {
-  Point3_Float point3(1.0f, 0.0f, 0.0f);
+  Renderer renderer;
 
-  float angle = M_PI / 2;
-  Axes axisZ = {0.0f, 0.0f, 1.0f};
-  Quaternion rotation = Quaternion::fromAngleAxes(angle, axisZ);
+  ShapeWithVertices cube(ShapeType::Cube);
 
-  Point3_Float roatedPoint3_Float = point3.rotate(rotation);
+  constexpr float fps = 60.0f;
 
-  roatedPoint3_Float.print();
+  float angle = M_PI / (2.0f * fps);
+  Axes axisXYZ = {1.0f, 1.0f, 1.0f};
+  Quaternion rotation = Quaternion::fromAngleAxes(angle, axisXYZ);
+
+  renderer.startRender(cube, rotation, fps);
 }
