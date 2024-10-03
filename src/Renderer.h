@@ -1,6 +1,7 @@
 #ifndef INCLUDE_SRC_RENDERER_H_
 #define INCLUDE_SRC_RENDERER_H_
 
+#include "Axes.h"
 #include "Quaternion.h"
 #include "ShapeWithVertices.h"
 #include "ShapeWithoutVertices.h"
@@ -15,7 +16,7 @@ public:
   Renderer();
   ~Renderer();
 
-  void startRender(Shape &shape, const Quaternion &rotation, float fps);
+  void startRendering(ShapeWithVertices &shape, float angleDelta, const Axes &axisXYZ, float fps);
 };
 
 #endif // INCLUDE_SRC_RENDERER_H_

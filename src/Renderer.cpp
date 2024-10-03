@@ -3,7 +3,9 @@
 #include "Point2_Int.h"
 #include "ShapeWithVertices.h"
 #include "ShapeWithoutVertices.h"
+#include "unistd.h"
 #include <algorithm>
+#include <cmath>
 #include <cstdlib>
 #include <ncurses.h>
 
@@ -55,4 +57,24 @@ void Renderer::drawShape(const ShapeWithoutVertices &shape) const {}
 void Renderer::clearScreen() const {
   clear();
   refresh();
+}
+
+void Renderer::startRendering(ShapeWithVertices &shape, float angleDelta,
+                              const Axes &axisXYZ, float fps) {
+  const int usTime = static_cast<int>(1000000.0f / fps);
+  float angle = 0;
+
+  while (true) {
+    clear();
+
+    drawShape(shape);
+
+    Quaternion rotation = Quaternion::fromAngleAxes(angle, axisXYZ);
+
+    shape.rotate(rotation);
+
+    angle = fmod(angle, 2 * M_PI) + angleDelta;
+
+    usleep(usTime);
+  }
 }
