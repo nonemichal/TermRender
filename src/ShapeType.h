@@ -3,6 +3,7 @@
 
 enum class ShapeType {
   Cube,
+  Custom,
 };
 
 #endif  // INCLUDE_SRC_SHAPETYPE_H_

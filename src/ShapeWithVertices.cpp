@@ -2,6 +2,7 @@
 #include "Point3_Float.h"
 #include "ShapeType.h"
 #include <algorithm>
+#include <iostream>
 
 ShapeWithVertices::ShapeWithVertices(std::vector<Point3_Float> vertices,
                                      std::vector<Edge> edges)
@@ -9,16 +10,17 @@ ShapeWithVertices::ShapeWithVertices(std::vector<Point3_Float> vertices,
 
 ShapeWithVertices::ShapeWithVertices(ShapeType shapeType) {
   switch (shapeType) {
-  case ShapeType::Cube: {
+  case ShapeType::Cube:
     vertices = {
         Point3_Float(-0.5f, 0.5f, 0.5f),  Point3_Float(0.5f, 0.5f, 0.5f),
         Point3_Float(0.5f, -0.5f, 0.5f),  Point3_Float(-0.5f, -0.5f, 0.5f),
         Point3_Float(-0.5f, 0.5f, -0.5f), Point3_Float(0.5f, 0.5f, -0.5f),
         Point3_Float(0.5f, -0.5f, -0.5f), Point3_Float(-0.5f, -0.5f, -0.5f)};
-    edges = {{1, 2}, {2, 3}, {3, 4}, {4, 1}, {4, 8}, {8, 7},
-             {7, 3}, {8, 5}, {5, 6}, {6, 7}, {1, 5}, {2, 6}};
+    edges = {{0, 1}, {1, 2}, {2, 3}, {3, 0}, {3, 7}, {7, 6},
+             {6, 2}, {7, 4}, {4, 5}, {5, 6}, {0, 4}, {1, 5}};
     break;
-  }
+  default:
+    break;
   }
 }
 
@@ -29,7 +31,11 @@ void ShapeWithVertices::rotate(const Quaternion &quat) {
 
 void ShapeWithVertices::scale(float scalar) {}
 
-void ShapeWithVertices::print() const {}
+void ShapeWithVertices::print() const {
+  std::for_each(vertices.begin(), vertices.end(),
+                [](Point3_Float point3) { point3.print(); });
+  std::cout << std::endl;
+}
 
 const std::vector<Point3_Float> &ShapeWithVertices::getVertices() const {
   return vertices;

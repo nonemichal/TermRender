@@ -12,6 +12,7 @@ struct Point2_Int {
   static Point2_Int newAdjusted(float x, float y, int width, int height);
 
   void update(const EdgeCalculation &calc);
+  void print() const;
 };
 
 #endif // INCLUDE_SRC_POINT2_H_

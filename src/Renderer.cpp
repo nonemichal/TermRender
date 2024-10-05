@@ -3,11 +3,13 @@
 #include "Point2_Int.h"
 #include "ShapeWithVertices.h"
 #include "ShapeWithoutVertices.h"
+#include "sys/ioctl.h"
 #include "unistd.h"
 #include <algorithm>
 #include <cmath>
 #include <cstdlib>
 #include <ncurses.h>
+#include <utility>
 
 Renderer::Renderer() {
   initscr();
@@ -33,11 +35,16 @@ void Renderer::drawShape(const ShapeWithVertices &shape) const {
 
 void Renderer::drawEdge(const Point3_Float &start,
                         const Point3_Float &end) const {
-  int width = getmaxx(stdscr);
-  int height = getmaxy(stdscr);
+  struct winsize w;
+  ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
 
-  Point2_Int start2 = Point2_Int::newAdjusted(start.x, start.y, width, height);
-  Point2_Int end2 = Point2_Int::newAdjusted(end.x, end.y, width, height);
+  int width = w.ws_row;
+  int height = w.ws_col;
+
+  auto adjustedPoints = adjustPoints(start, end, width, height);
+
+  auto start2 = adjustedPoints.first;
+  auto end2 = adjustedPoints.second;
 
   EdgeCalculation calc(start2, end2);
 
@@ -52,6 +59,18 @@ void Renderer::drawEdge(const Point3_Float &start,
   }
 }
 
+std::pair<Point2_Int, Point2_Int> Renderer::adjustPoints(Point3_Float start,
+                                                         Point3_Float end,
+                                                         int width,
+                                                         int height) const {
+  Point2_Int start2Adjusted =
+      Point2_Int::newAdjusted(start.x, start.y, width, height);
+  Point2_Int end2Adjusted =
+      Point2_Int::newAdjusted(end.x, end.y, width, height);
+
+  return std::make_pair(start2Adjusted, end2Adjusted);
+}
+
 void Renderer::drawShape(const ShapeWithoutVertices &shape) const {}
 
 void Renderer::clearScreen() const {
@@ -59,21 +78,16 @@ void Renderer::clearScreen() const {
   refresh();
 }
 
-void Renderer::startRendering(ShapeWithVertices &shape, float angleDelta,
-                              const Axes &axisXYZ, float fps) {
+void Renderer::start(ShapeWithVertices shape, const Quaternion &rotation,
+                     float fps) const {
   const int usTime = static_cast<int>(1000000.0f / fps);
-  float angle = 0;
 
   while (true) {
     clear();
 
     drawShape(shape);
 
-    Quaternion rotation = Quaternion::fromAngleAxes(angle, axisXYZ);
-
     shape.rotate(rotation);
-
-    angle = fmod(angle, 2 * M_PI) + angleDelta;
 
     usleep(usTime);
   }

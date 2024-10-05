@@ -20,7 +20,7 @@ public:
 
   static Quaternion fromAngleAxes(float angle, Axes axes);
 
-  Point3_Float toPoint3_Float() const;
+  Point3_Float toPoint3() const;
 
   void print() const;
 };
