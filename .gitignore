@@ -3,6 +3,7 @@ bin/
 lib/
 out/
 .cache/
+logs/
 
 *.o
 *.obj
