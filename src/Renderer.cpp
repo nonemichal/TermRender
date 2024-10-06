@@ -11,6 +11,7 @@
 #include <chrono>
 #include <cmath>
 #include <cstdlib>
+#include <memory>
 #include <ncurses.h>
 #include <thread>
 #include <utility>
@@ -24,6 +25,12 @@ Renderer::Renderer() {
 }
 
 Renderer::~Renderer() { endwin(); }
+
+void Renderer::setLogger(const std::string &fileName,
+                         std::chrono::milliseconds flushInterval) {
+  logger = std::make_unique<Logger>(fileName, flushInterval);
+  loggerEnabled = true;
+}
 
 void Renderer::drawShape(const ShapeWithVertices &shape) const {
   auto vertices = shape.getVertices();
@@ -96,6 +103,10 @@ void Renderer::start(ShapeWithVertices shape, float fps) const {
     drawShape(shape);
 
     shape.rotate(rotation);
+
+    if (loggerEnabled) {
+      logger->logShape(shape);
+    }
 
     std::this_thread::sleep_for(std::chrono::milliseconds{msTime});
   }

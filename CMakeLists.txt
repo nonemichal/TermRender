@@ -6,6 +6,7 @@ project(${PROJECT_NAME} LANGUAGES CXX)
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0")
 
 find_package(Curses REQUIRED)
+find_package(spdlog REQUIRED)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
@@ -17,7 +18,7 @@ message(STATUS "SOURCES: ${SOURCES}")
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 
-target_link_libraries(${PROJECT_NAME} ${CURSES_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} PRIVATE ${CURSES_LIBRARIES} spdlog::spdlog)
 
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     message("Compiling in Debug mode")
