@@ -2,6 +2,7 @@
 #define INCLUDE_SRC_VECTOR3_H_
 
 #include "Quaternion.h"
+#include "RotationQuat.h"
 
 struct Point3_Float {
   float x, y, z;
@@ -16,7 +17,7 @@ struct Point3_Float {
 
   Point3_Float normalized() const;
 
-  Point3_Float rotate(const Quaternion &quat) const;
+  Point3_Float rotate(const RotationQuat &rotation) const;
 
   void print() const;
 };

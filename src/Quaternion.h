@@ -13,6 +13,8 @@ public:
 
   Quaternion operator*(const Quaternion &quat) const;
 
+  Quaternion &copyFrom(const Quaternion &quat);
+
   float length() const;
 
   Quaternion normalized() const;

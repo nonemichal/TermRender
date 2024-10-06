@@ -24,9 +24,10 @@ ShapeWithVertices::ShapeWithVertices(ShapeType shapeType) {
   }
 }
 
-void ShapeWithVertices::rotate(const Quaternion &quat) {
-  std::transform(vertices.begin(), vertices.end(), vertices.begin(),
-                 [quat](Point3_Float point) { return point.rotate(quat); });
+void ShapeWithVertices::rotate(const RotationQuat &rotation) {
+  std::transform(
+      vertices.begin(), vertices.end(), vertices.begin(),
+      [rotation](Point3_Float point) { return point.rotate(rotation); });
 }
 
 void ShapeWithVertices::scale(float scalar) {}
@@ -34,7 +35,7 @@ void ShapeWithVertices::scale(float scalar) {}
 void ShapeWithVertices::print() const {
   std::for_each(vertices.begin(), vertices.end(),
                 [](Point3_Float point3) { point3.print(); });
-  std::cout << std::endl;
+  std::cout << "\n";
 }
 
 const std::vector<Point3_Float> &ShapeWithVertices::getVertices() const {

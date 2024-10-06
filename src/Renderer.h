@@ -12,12 +12,12 @@ public:
   Renderer();
   ~Renderer();
 
-  virtual void start(ShapeWithVertices shape, const Quaternion &rotation,
-                     float fps) const;
+  virtual void start(ShapeWithVertices shape, float fps) const;
 
 private:
-  std::pair<Point2_Int, Point2_Int>
-  adjustPoints(Point3_Float start, Point3_Float end, int width, int height) const;
+  std::pair<Point2_Int, Point2_Int> adjustPoints(Point3_Float start,
+                                                 Point3_Float end, int width,
+                                                 int height) const;
 
 protected:
   void drawEdge(const Point3_Float &start, const Point3_Float &end) const;

@@ -14,6 +14,15 @@ Quaternion Quaternion::operator*(const Quaternion &quat) const {
                     w * quat.z + x * quat.y - y * quat.x + z * quat.w);
 }
 
+Quaternion &Quaternion::copyFrom(const Quaternion &quat) {
+  w = quat.w;
+  x = quat.x;
+  y = quat.y;
+  z = quat.z;
+
+  return *this;
+}
+
 float Quaternion::length() const {
   return std::sqrt(w * w + x * x + y * y + z * z);
 }

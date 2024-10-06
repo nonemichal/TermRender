@@ -1,14 +1,18 @@
 #include "Renderer.h"
+#include "Angles.h"
 #include "EdgeCalculation.h"
 #include "Point2_Int.h"
+#include "RotationQuat.h"
 #include "ShapeWithVertices.h"
 #include "ShapeWithoutVertices.h"
 #include "sys/ioctl.h"
 #include "unistd.h"
 #include <algorithm>
+#include <chrono>
 #include <cmath>
 #include <cstdlib>
 #include <ncurses.h>
+#include <thread>
 #include <utility>
 
 Renderer::Renderer() {
@@ -78,9 +82,13 @@ void Renderer::clearScreen() const {
   refresh();
 }
 
-void Renderer::start(ShapeWithVertices shape, const Quaternion &rotation,
-                     float fps) const {
-  const int usTime = static_cast<int>(1000000.0f / fps);
+void Renderer::start(ShapeWithVertices shape, float fps) const {
+  const int msTime = static_cast<int>(1000.0f / fps);
+
+  constexpr float angle = M_PI / 100.0f;
+  const Angles angles(angle, angle, angle);
+
+  RotationQuat rotation(angles);
 
   while (true) {
     clear();
@@ -89,6 +97,6 @@ void Renderer::start(ShapeWithVertices shape, const Quaternion &rotation,
 
     shape.rotate(rotation);
 
-    usleep(usTime);
+    std::this_thread::sleep_for(std::chrono::milliseconds{msTime});
   }
 }

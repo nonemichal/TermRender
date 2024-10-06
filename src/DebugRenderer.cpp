@@ -1,14 +1,22 @@
 #include "DebugRenderer.h"
 #include "Point2_Int.h"
+#include "RotationQuat.h"
 #include "ShapeWithVertices.h"
 #include "sys/ioctl.h"
 #include <algorithm>
+#include <chrono>
+#include <cmath>
 #include <iostream>
+#include <thread>
 #include <unistd.h>
 
-void DebugRenderer::start(ShapeWithVertices shape, const Quaternion &rotation,
-                          float fps) const {
-  const int usTime = static_cast<int>(1000000.0f / fps);
+void DebugRenderer::start(ShapeWithVertices shape, float fps) const {
+  const int msTime = static_cast<int>(1000.0f / fps);
+
+  constexpr float angle = M_PI / 100.0f;
+  const Angles angles(angle, angle, angle);
+
+  RotationQuat rotation(angles);
 
   while (true) {
     shape.print();
@@ -16,7 +24,7 @@ void DebugRenderer::start(ShapeWithVertices shape, const Quaternion &rotation,
 
     shape.rotate(rotation);
 
-    usleep(usTime);
+    std::this_thread::sleep_for(std::chrono::milliseconds{msTime});
   }
 }
 

@@ -7,7 +7,8 @@ class DebugRenderer : public Renderer {
   void printAdjusted(const ShapeWithVertices &shape) const;
 
 public:
-  void start(ShapeWithVertices shape, const Quaternion &rotation,
+  void start(ShapeWithVertices shape,
+
              float fps) const override;
 };
 

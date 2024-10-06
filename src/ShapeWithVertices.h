@@ -2,6 +2,7 @@
 #define INCLUDE_SRC_SHAPEWITHVERTICES_H_
 
 #include "Point3_Float.h"
+#include "RotationQuat.h"
 #include "Shape.h"
 #include "ShapeType.h"
 #include <utility>
@@ -17,11 +18,11 @@ private:
 
 public:
   ShapeWithVertices(std::vector<Point3_Float> vertices,
-  std::vector<Edge> edges);
-  ShapeWithVertices(ShapeType shapeType); 
+                    std::vector<Edge> edges);
+  ShapeWithVertices(ShapeType shapeType);
   virtual ~ShapeWithVertices() = default;
 
-  void rotate(const Quaternion &quat) override;
+  void rotate(const RotationQuat &rotation) override;
   void scale(float scalar) override;
   void print() const override;
 

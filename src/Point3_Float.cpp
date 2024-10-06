@@ -1,5 +1,6 @@
 #include "Point3_Float.h"
 #include "Quaternion.h"
+#include "RotationQuat.h"
 #include <cmath>
 #include <iostream>
 #include <ostream>
@@ -23,12 +24,12 @@ Point3_Float Point3_Float::normalized() const {
   return Point3_Float(x / len, y / len, z / len);
 }
 
-Point3_Float Point3_Float::rotate(const Quaternion &quat) const {
+Point3_Float Point3_Float::rotate(const RotationQuat &rotation) const {
   Quaternion quatPoint3(0.0f, x, y, z);
 
-  Quaternion quatConjugate = quat.conjugate();
+  Quaternion quatConjugate = rotation.conjugate();
 
-  Quaternion quatRotated = quat * quatPoint3 * quatConjugate;
+  Quaternion quatRotated = rotation * quatPoint3 * quatConjugate;
 
   return quatRotated.toPoint3();
 }
