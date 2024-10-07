@@ -2,6 +2,7 @@
 #include "ShapeWithVertices.h"
 #include <algorithm>
 #include <chrono>
+#include <filesystem>
 #include <fmt/format.h>
 #include <sstream>
 
@@ -9,10 +10,14 @@ Logger::Logger(const std::string &fileName,
                std::chrono::milliseconds flushInterval)
     : flushInterval(flushInterval) {
 
-  logger = spdlog::basic_logger_mt("basic_logger", fileName);
+  std::string projectPath =
+      std::filesystem::absolute(__FILE__).parent_path().parent_path().string();
+  std::string logFile = projectPath + "/logs/" + fileName;
+
+  logger = spdlog::basic_logger_mt("basic_logger", logFile);
   spdlog::set_pattern("%Y-%m-%d %H:%M:%S %z [%^%l%$] %v");
 
-  messages.reserve(1000);
+  messages.reserve(100);
 
   loggingThread = std::thread(&Logger::flushLogs, this);
 }
